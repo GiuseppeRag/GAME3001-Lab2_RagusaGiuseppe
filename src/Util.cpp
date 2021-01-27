@@ -38,6 +38,22 @@ float Util::clamp(float value, const float min, const float max)
 	return value;
 }
 
+/*
+* Overloads the previous clamp function to confine a vector to the max length
+*/
+glm::vec2 Util::clamp(glm::vec2 vec, const float max_length)
+{
+	const auto sqr_mag = squaredMagnitude(vec);
+	if (sqr_mag > pow(max_length, 2))
+	{
+		const auto mag = sqrt(sqr_mag);
+		const auto normalX = vec.x / mag;
+		const auto normalY = vec.y / mag;
+		return glm::vec2(normalX * max_length, normalY * max_length);
+	}
+	return vec;
+}
+
 /**
 * Clamps a value between 0 and 1 and returns the result
 *

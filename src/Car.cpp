@@ -1,4 +1,5 @@
 #include "Car.h"
+#include "Game.h"
 
 Car::Car()
 {
@@ -14,6 +15,8 @@ Car::Car()
 	setMaxSpeed(8.0f);
 	setOrientation(glm::vec2(0.0f, -1.0f));
 	setRotation(0.0f);
+	setAccelerationRate(10.0f);
+	setTurnRate(10.0f);
 	setType(CAR);
 }
 
@@ -44,18 +47,69 @@ void Car::setMaxSpeed(float speed) {
 	m_maxSpeed = speed;
 }
 
+glm::vec2 Car::getOrientation()
+{
+	return m_orientation;
+}
+
 void Car::setOrientation(glm::vec2 orientation) {
 	m_orientation = orientation;
 }
 
+float Car::getRotation()
+{
+	return m_rotationAngle;
+}
+
 void Car::setRotation(float rotation) {
 	m_rotationAngle = rotation;
+	auto angleRads = (rotation - 90.0f) * Util::Deg2Rad;
+
+	auto x = cos(angleRads);
+	auto y = sin(angleRads);
+
+	setOrientation(glm::vec2(x, y));
+}
+
+float Car::getTurnRate()
+{
+	return m_turnRate;
+}
+
+void Car::setTurnRate(float rate)
+{
+	m_turnRate = rate;
+}
+
+float Car::getAccelerationRate()
+{
+	return m_accelRate;
+}
+
+void Car::setAccelerationRate(float rate)
+{
+	m_accelRate = rate;
 }
 
 void Car::m_Move() {
+	auto deltaTime = TheGame::Instance()->getDeltaTime();
+
 	m_targetDirection = m_destination - getTransform()->position;
 	m_targetDirection = Util::normalize(m_targetDirection);
 
-	getRigidBody()->velocity = m_targetDirection * m_maxSpeed;
+	auto target_rotation = Util::signedAngle(getOrientation(), m_targetDirection);
+
+	if (target_rotation > 0)
+	{
+		setRotation(getRotation() + getTurnRate());
+	}
+	else if (target_rotation < 0)
+	{
+		setRotation(getRotation() - getTurnRate());
+	}
+
+	getRigidBody()->acceleration = getOrientation() * getAccelerationRate();
+	getRigidBody()->velocity += getOrientation() * deltaTime + 0.5f * getRigidBody()->acceleration * deltaTime;
+	getRigidBody()->velocity = Util::clamp(getRigidBody()->velocity, m_maxSpeed);
 	getTransform()->position += getRigidBody()->velocity;
 }

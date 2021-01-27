@@ -15,14 +15,22 @@ public:
 
 	void setDestination(const glm::vec2 destination);
 	void setMaxSpeed(float speed);
+	glm::vec2 getOrientation();
 	void setOrientation(glm::vec2 orientation);
+	float getRotation();
 	void setRotation(float rotation);
+	float getTurnRate();
+	void setTurnRate(float rate);
+	float getAccelerationRate();
+	void setAccelerationRate(float rate);
 private:
 	glm::vec2 m_destination;
 	glm::vec2 m_targetDirection;
 	glm::vec2 m_orientation;
 	float m_rotationAngle;
 	float m_maxSpeed;
+	float m_turnRate;
+	float m_accelRate;
 
 	void m_Move();
 };

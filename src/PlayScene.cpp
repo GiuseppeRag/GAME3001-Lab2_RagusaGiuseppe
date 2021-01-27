@@ -96,6 +96,8 @@ void PlayScene::GUI_Function() const
 		std::cout << "Reset Car Button Pressed" << std::endl;
 		m_pCar->setEnabled(false);
 		m_pCar->getTransform()->position = glm::vec2(100.0f, 100.0f);
+		m_pCar->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
+		m_pCar->setRotation(0.0f);
 	}
 
 	ImGui::SameLine();
