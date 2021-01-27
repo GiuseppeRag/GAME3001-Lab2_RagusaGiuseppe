@@ -98,14 +98,17 @@ void Car::m_Move() {
 	m_targetDirection = Util::normalize(m_targetDirection);
 
 	auto target_rotation = Util::signedAngle(getOrientation(), m_targetDirection);
+	float turn_sensitivity = 5.0f;
 
-	if (target_rotation > 0)
-	{
-		setRotation(getRotation() + getTurnRate());
-	}
-	else if (target_rotation < 0)
-	{
-		setRotation(getRotation() - getTurnRate());
+	if (abs(target_rotation) > turn_sensitivity) {
+		if (target_rotation > 0)
+		{
+			setRotation(getRotation() + getTurnRate());
+		}
+		else if (target_rotation < 0)
+		{
+			setRotation(getRotation() - getTurnRate());
+		}
 	}
 
 	getRigidBody()->acceleration = getOrientation() * getAccelerationRate();

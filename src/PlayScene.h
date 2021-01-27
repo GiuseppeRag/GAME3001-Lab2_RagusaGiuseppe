@@ -6,6 +6,7 @@
 #include "Label.h"
 #include "Car.h"
 #include "Target.h"
+#include "Obstacle.h"
 
 class PlayScene : public Scene
 {
@@ -30,6 +31,7 @@ private:
 
 	Car* m_pCar;
 	Target* m_pTarget;
+	Obstacle* m_pObstacle;
 };
 
 #endif /* defined (__PLAY_SCENE__) */
