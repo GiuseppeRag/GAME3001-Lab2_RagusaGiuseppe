@@ -29,11 +29,6 @@ bool CollisionManager::squaredRadiusCheck(GameObject* object1, GameObject* objec
 			switch (object2->getType()) {
 			case TARGET:
 				std::cout << "Collision with Target!" << std::endl;
-				SoundManager::Instance().playSound("yay", 0);
-				break;
-			case OBSTACLE:
-				std::cout << "Collision with Obstacle" << std::endl;
-				//SoundManager::Instance().playSound("yay", 0);
 				break;
 			default:
 				break;
@@ -62,7 +57,7 @@ bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
 
 	if (
 		p1.x < p2.x + p2Width &&
-		p1.x + p1Width > p2.x&&
+		p1.x + p1Width > p2.x &&
 		p1.y < p2.y + p2Height &&
 		p1.y + p1Height > p2.y
 		)
@@ -72,12 +67,9 @@ bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
 			object2->getRigidBody()->isColliding = true;
 
 			switch (object2->getType()) {
-			case TARGET:
-				std::cout << "Collision with Target!" << std::endl;
+			case OBSTACLE:
+				std::cout << "Collision with Obstacle" << std::endl;
 				SoundManager::Instance().playSound("yay", 0);
-				break;
-			default:
-				
 				break;
 			}
 

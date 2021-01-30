@@ -68,7 +68,7 @@ void PlayScene::start()
 	addChild(m_pTarget);
 
 	m_pObstacle = new Obstacle();
-	m_pObstacle->getTransform()->position = glm::vec2(300.0f, 300.0f);
+	m_pObstacle->getTransform()->position = glm::vec2(200.0f, 250.0f);
 	addChild(m_pObstacle);
 
 	m_pCar = new Car();
@@ -128,7 +128,7 @@ void PlayScene::GUI_Function() const
 		m_pCar->getTransform()->position = glm::vec2(100.0f, 100.0f);
 		m_pCar->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
 		m_pCar->setRotation(0.0f);
-		turn_rate = 5.0f;
+		turn_rate = 10.0f;
 		accel_rate = 10.0f;
 		angleInRadians = 0.0f;
 	}

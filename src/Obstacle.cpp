@@ -12,7 +12,7 @@ Obstacle::Obstacle()
 	getRigidBody()->isColliding = false;
 	setType(OBSTACLE);
 
-	//SoundManager::Instance().load("../Assets/audio/yay.ogg", "yay", SOUND_SFX);
+	SoundManager::Instance().load("../Assets/audio/yay.ogg", "yay", SOUND_SFX);
 }
 
 Obstacle::~Obstacle()
@@ -20,7 +20,7 @@ Obstacle::~Obstacle()
 
 void Obstacle::draw()
 {
-	TextureManager::Instance()->draw("obstacle", getTransform()->position.x, getTransform()->position.y, 0, 255, true);
+	TextureManager::Instance()->draw("obstacle", getTransform()->position.x, getTransform()->position.y, 0, 255, false);
 }
 
 void Obstacle::update()

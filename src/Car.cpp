@@ -25,7 +25,7 @@ Car::~Car()
 
 void Car::draw()
 {
-	TextureManager::Instance()->draw("car", getTransform()->position.x, getTransform()->position.y, m_rotationAngle, 255, true);
+	TextureManager::Instance()->draw("car", getTransform()->position.x, getTransform()->position.y, m_rotationAngle, 255, false);
 	Util::DrawLine(getTransform()->position, getTransform()->position + m_orientation * 60.0f);
 }
 
@@ -65,10 +65,7 @@ void Car::setRotation(float rotation) {
 	m_rotationAngle = rotation;
 	auto angleRads = (rotation - 90.0f) * Util::Deg2Rad;
 
-	auto x = cos(angleRads);
-	auto y = sin(angleRads);
-
-	setOrientation(glm::vec2(x, y));
+	setOrientation(glm::vec2(cos(angleRads), sin(angleRads)));
 }
 
 float Car::getTurnRate()
@@ -92,7 +89,7 @@ void Car::setAccelerationRate(float rate)
 }
 
 void Car::m_Move() {
-	auto deltaTime = TheGame::Instance()->getDeltaTime();
+	float deltaTime = TheGame::Instance()->getDeltaTime();
 
 	m_targetDirection = m_destination - getTransform()->position;
 	m_targetDirection = Util::normalize(m_targetDirection);
@@ -102,13 +99,9 @@ void Car::m_Move() {
 
 	if (abs(target_rotation) > turn_sensitivity) {
 		if (target_rotation > 0)
-		{
 			setRotation(getRotation() + getTurnRate());
-		}
 		else if (target_rotation < 0)
-		{
 			setRotation(getRotation() - getTurnRate());
-		}
 	}
 
 	getRigidBody()->acceleration = getOrientation() * getAccelerationRate();
